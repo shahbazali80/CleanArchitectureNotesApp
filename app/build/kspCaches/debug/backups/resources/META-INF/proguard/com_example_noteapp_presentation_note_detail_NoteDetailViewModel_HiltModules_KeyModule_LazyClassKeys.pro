@@ -1,0 +1,1 @@
+-keep,allowobfuscation,allowshrinking class com.example.noteapp.presentation.note_detail.NoteDetailViewModel

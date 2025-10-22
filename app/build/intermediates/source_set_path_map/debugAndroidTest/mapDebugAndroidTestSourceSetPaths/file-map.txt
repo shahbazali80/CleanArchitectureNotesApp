@@ -1,0 +1,7 @@
+com.example.noteapp.test.app-core-1.7.0-0 C:\Users\System01\.gradle\caches\8.13\transforms\33bea2a23f63ecdf73dd0ca8cd48a5e7\transformed\core-1.7.0\res
+com.example.noteapp.test.app-tracing-1.2.0-1 C:\Users\System01\.gradle\caches\8.13\transforms\89594a5335e2963164060fb4af04bed9\transformed\tracing-1.2.0\res
+com.example.noteapp.test.app-androidTest-2 D:\Examples\NoteApp\app\build\generated\res\resValues\androidTest\debug
+com.example.noteapp.test.app-updated_navigation_xml-3 D:\Examples\NoteApp\app\build\generated\updated_navigation_xml\debugAndroidTest
+com.example.noteapp.test.app-mergeDebugAndroidTestResources-4 D:\Examples\NoteApp\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\merged.dir
+com.example.noteapp.test.app-mergeDebugAndroidTestResources-5 D:\Examples\NoteApp\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\stripped.dir
+com.example.noteapp.test.app-debugAndroidTest-6 D:\Examples\NoteApp\app\build\intermediates\merged_res\debugAndroidTest\mergeDebugAndroidTestResources
