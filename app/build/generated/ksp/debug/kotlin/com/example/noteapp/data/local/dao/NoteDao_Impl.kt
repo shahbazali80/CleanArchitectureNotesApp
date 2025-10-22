@@ -1,9 +1,9 @@
 package com.example.noteapp.`data`.local.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.EntityDeleteOrUpdateAdapter
 import androidx.room.EntityInsertAdapter
 import androidx.room.RoomDatabase
+import androidx.room.coroutines.createFlow
 import androidx.room.util.getColumnIndexOrThrow
 import androidx.room.util.performSuspending
 import androidx.sqlite.SQLiteStatement
@@ -18,6 +18,7 @@ import kotlin.collections.List
 import kotlin.collections.MutableList
 import kotlin.collections.mutableListOf
 import kotlin.reflect.KClass
+import kotlinx.coroutines.flow.Flow
 
 @Generated(value = ["androidx.room.RoomProcessor"])
 @Suppress(names = ["UNCHECKED_CAST", "DEPRECATION", "REDUNDANT_PROJECTION", "REMOVAL"])
@@ -65,8 +66,9 @@ public class NoteDao_Impl(
     }
   }
 
-  public override suspend fun insertNote(entity: NoteEntity): Unit = performSuspending(__db, false, true) { _connection ->
-    __insertAdapterOfNoteEntity.insert(_connection, entity)
+  public override suspend fun insertNote(entity: NoteEntity): Long = performSuspending(__db, false, true) { _connection ->
+    val _result: Long = __insertAdapterOfNoteEntity.insertAndReturnId(_connection, entity)
+    _result
   }
 
   public override suspend fun deleteNote(entity: NoteEntity): Unit = performSuspending(__db, false, true) { _connection ->
@@ -77,9 +79,9 @@ public class NoteDao_Impl(
     __updateAdapterOfNoteEntity.handle(_connection, entity)
   }
 
-  public override fun getAllNotes(): LiveData<List<NoteEntity>> {
+  public override fun getAllNotes(): Flow<List<NoteEntity>> {
     val _sql: String = "SELECT * FROM tb_notes ORDER BY id DESC"
-    return __db.invalidationTracker.createLiveData(arrayOf("tb_notes"), false) { _connection ->
+    return createFlow(__db, false, arrayOf("tb_notes")) { _connection ->
       val _stmt: SQLiteStatement = _connection.prepare(_sql)
       try {
         val _columnIndexOfId: Int = getColumnIndexOrThrow(_stmt, "id")

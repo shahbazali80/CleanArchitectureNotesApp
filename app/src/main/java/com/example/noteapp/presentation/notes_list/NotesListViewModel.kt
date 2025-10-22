@@ -9,6 +9,8 @@ import com.example.noteapp.domain.usecase.DeleteNoteUseCase
 import com.example.noteapp.domain.usecase.GetAllNotesUseCase
 import com.example.noteapp.utils.showLog
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,17 +26,24 @@ class NotesListViewModel @Inject constructor(
         loadNotes()
     }
 
-    private fun loadNotes() {
+    fun loadNotes() {
         viewModelScope.launch {
-            _state.value = _state.value?.copy(isLoading = true)
-            getAllNotesUseCase().observeForever { notes ->
-                _state.value = NotesListState(
-                    notes = notes,
-                    isLoading = false
-                )
-            }
+            getAllNotesUseCase()
+                .onStart {
+                    _state.value = NotesListState(isLoading = true)
+                }
+                .catch { e ->
+                    _state.value = NotesListState(error = e.message ?: "Something went wrong")
+                }
+                .collect { notes ->
+                    _state.value = NotesListState(
+                        notes = notes,
+                        isLoading = false
+                    )
+                }
         }
     }
+
 
     fun deleteNote(note: Note) {
         viewModelScope.launch {

@@ -10,12 +10,16 @@ import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.noteapp.databinding.FragmentNoteDetailBinding
 import com.example.noteapp.domain.model.Note
 import com.example.noteapp.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class NoteDetailFragment : Fragment() {
@@ -71,21 +75,36 @@ class NoteDetailFragment : Fragment() {
                 }
             }
 
-            viewModel.state.observe(viewLifecycleOwner) { state ->
-                when {
-                    state.isLoading -> {
-                        if (isEditTextGetFocus) mContext.showToast("Wait, note saving")
-                    }
-                    state.isSuccess -> {
-                        mContext.showToast(actionMessage)
-                        findNavController().popBackStack()
-
-                    }
-                    state.error != null -> {
-                        mContext.showToast(state.error)
+            lifecycleScope.launch {
+                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    viewModel.state.collect { state ->
+                        when {
+                            state.isLoading -> if (isEditTextGetFocus) mContext.showToast("Wait, note saving")
+                            state.isSuccess -> {
+                                mContext.showToast(actionMessage)
+                                findNavController().popBackStack()
+                            }
+                            state.error != null -> mContext.showToast(state.error)
+                        }
                     }
                 }
             }
+
+//            viewModel.state.observe(viewLifecycleOwner) { state ->
+//                when {
+//                    state.isLoading -> {
+//                        if (isEditTextGetFocus) mContext.showToast("Wait, note saving")
+//                    }
+//                    state.isSuccess -> {
+//                        mContext.showToast(actionMessage)
+//                        findNavController().popBackStack()
+//
+//                    }
+//                    state.error != null -> {
+//                        mContext.showToast(state.error)
+//                    }
+//                }
+//            }
 
             fabSave.setOnClickListener{
                 val title = etTitle.text.toString().trim()
