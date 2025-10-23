@@ -1,7 +1,5 @@
 package com.example.noteapp.presentation.note_detail
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.noteapp.domain.model.Note
@@ -22,7 +20,7 @@ class NoteDetailViewModel @Inject constructor(
 ): ViewModel() {
     private val _state = MutableStateFlow(NoteDetailState(isLoading = true))
     val state: StateFlow<NoteDetailState> = _state
-
+// shared flow?
     fun addNote(note: Note) {
         viewModelScope.launch {
             try {

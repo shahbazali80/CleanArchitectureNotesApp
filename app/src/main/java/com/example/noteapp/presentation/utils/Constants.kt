@@ -1,4 +1,4 @@
-package com.example.noteapp.utils
+package com.example.noteapp.presentation.utils
 
 object Constants {
     const val DATABASE_NAME = "db_notes"

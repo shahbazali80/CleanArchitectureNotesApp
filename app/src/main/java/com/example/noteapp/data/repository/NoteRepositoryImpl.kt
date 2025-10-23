@@ -1,9 +1,6 @@
 package com.example.noteapp.data.repository
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
 import com.example.noteapp.data.local.dao.NoteDao
-import com.example.noteapp.data.mapper.NoteMapper
 import com.example.noteapp.data.mapper.NoteMapper.fromEntity
 import com.example.noteapp.data.mapper.NoteMapper.toEntity
 import com.example.noteapp.domain.model.Note

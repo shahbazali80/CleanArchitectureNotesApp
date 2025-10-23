@@ -1,4 +1,4 @@
-package com.example.noteapp.utils
+package com.example.noteapp.presentation.utils
 
 import android.app.AlertDialog
 import android.content.Context

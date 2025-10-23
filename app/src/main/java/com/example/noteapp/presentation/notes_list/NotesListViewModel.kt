@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.noteapp.domain.model.Note
 import com.example.noteapp.domain.usecase.DeleteNoteUseCase
 import com.example.noteapp.domain.usecase.GetAllNotesUseCase
-import com.example.noteapp.utils.showLog
+import com.example.noteapp.presentation.utils.showLog
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart

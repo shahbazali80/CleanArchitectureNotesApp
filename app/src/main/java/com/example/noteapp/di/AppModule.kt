@@ -6,7 +6,7 @@ import com.example.noteapp.data.local.dao.NoteDao
 import com.example.noteapp.data.local.database.NotesDatabase
 import com.example.noteapp.data.repository.NoteRepositoryImpl
 import com.example.noteapp.domain.respository.NoteRepository
-import com.example.noteapp.utils.Constants
+import com.example.noteapp.presentation.utils.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

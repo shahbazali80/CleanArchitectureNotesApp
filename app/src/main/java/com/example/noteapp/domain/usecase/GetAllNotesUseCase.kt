@@ -1,6 +1,5 @@
 package com.example.noteapp.domain.usecase
 
-import androidx.lifecycle.LiveData
 import com.example.noteapp.domain.model.Note
 import com.example.noteapp.domain.respository.NoteRepository
 import kotlinx.coroutines.flow.Flow

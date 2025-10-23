@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.noteapp.databinding.NoteItemLayoutBinding
 import com.example.noteapp.domain.model.Note
-import com.example.noteapp.utils.getDateTime
+import com.example.noteapp.presentation.utils.getDateTime
 
 class NotesListAdapter(
     private val onItemClick: (Note) -> Unit

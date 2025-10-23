@@ -17,8 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.noteapp.R
 import com.example.noteapp.databinding.FragmentNotesListBinding
 import com.example.noteapp.domain.model.Note
-import com.example.noteapp.utils.SwipeToDeleteHelper
-import com.example.noteapp.utils.showToast
+import com.example.noteapp.presentation.utils.SwipeToDeleteHelper
+import com.example.noteapp.presentation.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

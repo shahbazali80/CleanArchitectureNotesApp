@@ -17,7 +17,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.noteapp.databinding.FragmentNoteDetailBinding
 import com.example.noteapp.domain.model.Note
-import com.example.noteapp.utils.showToast
+import com.example.noteapp.presentation.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -76,7 +76,10 @@ class NoteDetailFragment : Fragment() {
             }
 
             lifecycleScope.launch {
+/*
+check this before use
                 viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+*/
                     viewModel.state.collect { state ->
                         when {
                             state.isLoading -> if (isEditTextGetFocus) mContext.showToast("Wait, note saving")
@@ -87,7 +90,7 @@ class NoteDetailFragment : Fragment() {
                             state.error != null -> mContext.showToast(state.error)
                         }
                     }
-                }
+                /*}*/
             }
 
 //            viewModel.state.observe(viewLifecycleOwner) { state ->
