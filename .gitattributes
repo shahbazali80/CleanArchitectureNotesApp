@@ -1,0 +1,5 @@
+*.html linguist-language=HTML
+*.java linguist-language=Java
+*.kt linguist-language=Kotlin
+*.xml linguist-vendored
+/build/** linguist-vendored
