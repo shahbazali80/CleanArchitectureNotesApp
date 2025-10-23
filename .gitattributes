@@ -1,5 +1,11 @@
-*.html linguist-language=HTML
-*.java linguist-language=Java
-*.kt linguist-language=Kotlin
-*.xml linguist-vendored
-/build/** linguist-vendored
+# Ignore Android generated files and resource files from language statistics
+**/*.xml linguist-vendored
+**/*.html linguist-vendored
+**/*.properties linguist-vendored
+
+# Ignore build files and cache directories
+.gradle/* linguist-vendored
+build/* linguist-vendored
+gradle/* linguist-vendored
+captures/* linguist-vendored
+.idea/* linguist-vendored
