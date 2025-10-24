@@ -15,7 +15,7 @@ interface NoteDao {
     suspend fun insertNote(entity: NoteEntity): Long
 
     @Update
-    suspend fun updateNote(entity: NoteEntity)
+    suspend fun updateNote(entity: NoteEntity): Int
 
     @Query("SELECT * FROM tb_notes ORDER BY id DESC")
     fun getAllNotes(): Flow<List<NoteEntity>>

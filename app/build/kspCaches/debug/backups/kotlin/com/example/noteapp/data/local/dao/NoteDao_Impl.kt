@@ -75,8 +75,10 @@ public class NoteDao_Impl(
     __deleteAdapterOfNoteEntity.handle(_connection, entity)
   }
 
-  public override suspend fun updateNote(entity: NoteEntity): Unit = performSuspending(__db, false, true) { _connection ->
-    __updateAdapterOfNoteEntity.handle(_connection, entity)
+  public override suspend fun updateNote(entity: NoteEntity): Int = performSuspending(__db, false, true) { _connection ->
+    var _result: Int = 0
+    _result += __updateAdapterOfNoteEntity.handle(_connection, entity)
+    _result
   }
 
   public override fun getAllNotes(): Flow<List<NoteEntity>> {

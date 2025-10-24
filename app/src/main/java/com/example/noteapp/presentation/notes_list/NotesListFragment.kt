@@ -12,6 +12,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.noteapp.R
@@ -20,6 +21,7 @@ import com.example.noteapp.domain.model.Note
 import com.example.noteapp.presentation.utils.SwipeToDeleteHelper
 import com.example.noteapp.presentation.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class NotesListFragment : Fragment() {
@@ -74,19 +76,33 @@ class NotesListFragment : Fragment() {
                 }
             ).attach()
 
-            viewModel.state.observe(viewLifecycleOwner) { state ->
-                tvLoading.text = if (state.isLoading) "Loading" else ""
-                notes = state.notes
-                if (notes.isEmpty()) {
-                    tvLoading.text = "No note found"
-                }
+            lifecycleScope.launch {
+                viewModel.state.collect { state ->
+                    when (state) {
+                        NotesListState.Loading -> {
+                            tvLoading.text = "Loading"
+                            tvLoading.visibility = View.VISIBLE
+                            rvList.visibility = View.GONE
+                        }
+                        is NotesListState.Error -> {
+                            tvLoading.text = state.message
+                            tvLoading.visibility = View.VISIBLE
+                            rvList.visibility = View.GONE
+                        }
+                        is NotesListState.Success -> {
+                            val notes = state.notes
 
-                tvLoading.visibility = View.GONE
-                rvList.visibility = View.VISIBLE
-                adapter.setList(notes)
-
-                state.error?.let {
-                    tvLoading.text = it
+                            if (notes.isEmpty()) {
+                                tvLoading.text = "No note found"
+                                tvLoading.visibility = View.VISIBLE
+                                rvList.visibility = View.GONE
+                            } else {
+                                tvLoading.visibility = View.GONE
+                                rvList.visibility = View.VISIBLE
+                                adapter.setList(notes)
+                            }
+                        }
+                    }
                 }
             }
 
