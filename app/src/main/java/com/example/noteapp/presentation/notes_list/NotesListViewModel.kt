@@ -20,6 +20,9 @@ class NotesListViewModel @Inject constructor(
     private val getAllNotesUseCase: GetAllNotesUseCase,
     private val deleteNoteUseCase: DeleteNoteUseCase
 ): ViewModel() {
+    private val _selectedNote = MutableSharedFlow<Note?>(1)
+    val selectedNote: SharedFlow<Note?> = _selectedNote
+
     private val _state = MutableSharedFlow<NotesListState>(replay = 1)
     val state: SharedFlow<NotesListState> = _state.asSharedFlow()
 
@@ -49,6 +52,12 @@ class NotesListViewModel @Inject constructor(
             } catch (e: Exception) {
                 showLog("NotesListViewModel12345", e.message.toString())
             }
+        }
+    }
+
+    fun selectNote(note: Note) {
+        viewModelScope.launch {
+            _selectedNote.emit(note)
         }
     }
 }

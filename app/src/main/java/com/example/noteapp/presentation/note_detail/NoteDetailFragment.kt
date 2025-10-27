@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.noteapp.databinding.FragmentNoteDetailBinding
 import com.example.noteapp.domain.model.Note
+import com.example.noteapp.presentation.notes_list.NotesListViewModel
 import com.example.noteapp.presentation.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -26,11 +27,13 @@ class NoteDetailFragment : Fragment() {
 
     private lateinit var mContext: Context
 
-    val args: NoteDetailFragmentArgs by navArgs()
-
+    private val viewModel1: NotesListViewModel by viewModels()
     private val viewModel: NoteDetailViewModel by viewModels()
 
+    private var mNote: Note? = null
+
     private var isEditTextGetFocus: Boolean = false
+    private var isUpdate: Boolean = false
     val focusListener = View.OnFocusChangeListener { _, hasFocus ->
         isEditTextGetFocus = hasFocus
     }
@@ -56,13 +59,20 @@ class NoteDetailFragment : Fragment() {
         mContext = requireContext()
 
         binding.apply {
-            val note = args.note
-            if (note != null) {
-                etTitle.setText(note.title)
-                etContent.setText(note.content)
+            lifecycleScope.launchWhenStarted {
+                viewModel1.selectedNote.collect { note ->
+                    mNote = note
 
-                textView.text = "Edit Note"
-                actionMessage = "Updated Note"
+                    if (mNote != null) {
+                        etTitle.setText(note?.title)
+                        etContent.setText(note?.content)
+
+                        textView.text = "Edit Note"
+                        actionMessage = "Updated Note"
+
+                        isUpdate = true
+                    }
+                }
             }
 
             requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
@@ -129,12 +139,12 @@ class NoteDetailFragment : Fragment() {
 
     private fun saveNoteToLocal(title: String, content: String) {
         viewModel.apply {
-            if (args.note != null) {
+            if (mNote != null) {
                 val note = Note(
-                    id = args.note!!.id,
+                    id = mNote!!.id,
                     title = title,
                     content = content,
-                    createdAt = args.note!!.createdAt,
+                    createdAt = mNote!!.createdAt,
                     updatedAt = System.currentTimeMillis()
                 )
 

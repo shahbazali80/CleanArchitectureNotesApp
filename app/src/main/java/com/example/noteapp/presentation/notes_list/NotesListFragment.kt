@@ -161,8 +161,8 @@ class NotesListFragment : Fragment() {
         }
 
         try {
-            val action = NotesListFragmentDirections.actionNotesListFragmentToNoteDetailFragment(note)
-            navController.navigate(action)
+            viewModel.selectNote(note!!)
+            navController.navigate(R.id.action_notesListFragment_to_noteDetailFragment)
         } catch (e: IllegalStateException) {
             mContext.showToast("Error: ${e.message}")
         }
